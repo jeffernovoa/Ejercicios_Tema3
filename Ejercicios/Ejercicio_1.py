@@ -1,15 +1,14 @@
-def hanoi(n, source, target, auxiliary):
-    """
-    Resuelve el problema de la Torre de Hanói.
-
-    :param n: Número de piedras a mover.
-    :param source: Nombre de la columna origen.
-    :param target: Nombre de la columna destino.
-    :param auxiliary: Nombre de la columna auxiliar.
-    """
+def hanoi(n, source, target, auxiliary, moves):
     if n == 1:
-        print(f"Mueve la piedra de {source} a {target}")
+        moves.append(f"Mueve la piedra de {source} a {target}")
         return
-    hanoi(n - 1, source, auxiliary, target)
-    print(f"Mueve la piedra de {source} a {target}")
-    hanoi(n - 1, auxiliary, target, source)
+    hanoi(n - 1, source, auxiliary, target, moves)
+    moves.append(f"Mueve la piedra de {source} a {target}")
+    hanoi(n - 1, auxiliary, target, source, moves)
+
+def resolver_hanoi(n, imprimir_todo=True):
+    if not isinstance(n, int) or n <= 0:
+        raise ValueError("El número de piedras debe ser un entero positivo.")
+    moves = []
+    hanoi(n, 'A', 'C', 'B', moves)
+    print("\n".join(moves if imprimir_todo else moves[-100:]))
